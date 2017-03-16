@@ -1,0 +1,23 @@
+%h1
+  Übersicht
+%hr
+.row
+  .col-md-6.col-sm-12.col-xs-12
+    .dashboard_graph
+      .row.x_title
+        .col-md-12
+          %h3
+            Kürzlich hinzugefügte Dateien 
+      .col-md-12.col-sm-12.col-xs-12
+        = render 'user_files/user_files'
+      .clearfix
+  .col-md-6.col-sm-12.col-xs-12
+    .dashboard_graph
+      .row.x_title
+        .col-md-12
+          %h3
+            Kürzlich hinzugefügte eMails 
+      .col-md-12.col-sm-12.col-xs-12
+        = render 'emails/emails'
+      .clearfix
+

@@ -1,0 +1,22 @@
+= form_for @email do |f|
+  = render partial: 'shared/model_errors', locals: { obj: @email }
+  .form-group
+    = f.label :username
+    = f.text_field :username, class: 'form-control', required: true
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control', required: true
+  .form-group
+    = f.label :server
+    = f.text_field :server, class: 'form-control', required: true
+  .form-group
+    = f.label :port
+    = f.text_field :port, class: 'form-control', placeholder: '143'
+  .form-group
+    = f.label :login
+    = f.text_field :login, class: 'form-control', placeholder: 'LOGIN'
+  .form-group
+    = f.label :ssl
+    = f.check_box :ssl, class: 'js-switch'
+  .actions
+    = f.submit 'Speichern & Testen', class: 'btn btn-primary'

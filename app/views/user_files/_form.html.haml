@@ -1,0 +1,13 @@
+.form
+  = form_for @user_file do |f|
+    = render partial: 'shared/model_error', locals: { obj: @user_file } 
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+    - unless @user_file.orig
+      .form-group
+        = f.label :orig, "Datei"
+        = f.file_field :orig, class: 'form-control dropzone dz-clickable'
+    .form-group
+      = f.submit 'Speichern', class: 'btn btn-primary'
+      = link_to 'Zurueck', user_files_path, class: 'btn btn-default'

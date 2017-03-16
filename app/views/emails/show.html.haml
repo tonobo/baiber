@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @email.user
+%p
+  %b Username:
+  = @email.username
+%p
+  %b Password:
+  = @email.password
+%p
+  %b Server:
+  = @email.server
+%p
+  %b Port:
+  = @email.port
+%p
+  %b Login:
+  = @email.login
+%p
+  %b Ssl:
+  = @email.ssl
+
+= link_to 'Edit', edit_email_path(@email)
+\|
+= link_to 'Back', emails_path

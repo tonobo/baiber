@@ -1,0 +1,24 @@
+.row
+  .col-md-offset-3.col-sm-offset-3.col-xs-offset-3.col-md-6.col-sm-6.col-xs-6
+    .dashboard_graph
+      .row.x_title
+        .col-md-6
+          %h3
+            = t('.sign_in', default: 'Sign in')
+      .col-md-12.col-sm-12.col-xs-12
+        = form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f|
+          .form-group
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'form-control'
+          .form-group
+            = f.label :password
+            = f.password_field :password, autocomplete: 'off', class: 'form-control'
+          - if devise_mapping.rememberable?
+            .checkbox
+              = f.label :remember_me do
+                = f.check_box :remember_me, class: 'js-switch'
+                = t('.remember_me', default: 'Remember me')
+          = f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary'
+          .form-group
+            = render 'devise/shared/links'
+      .clearfix

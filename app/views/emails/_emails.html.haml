@@ -1,0 +1,23 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th Benutzer
+      %th Server
+      %th 
+      - unless @unset_controls
+        %th
+
+  %tbody
+    - @emails.each do |email|
+      %tr
+        %td= email.username
+        %td= email.server
+        %td
+          %span.label.label-default= time_ago_in_words email.created_at
+        - unless @unset_controls
+          %td
+            = link_to 'Bearbeiten', edit_email_path(email), class: 'btn btn-default'
+            = link_to 'Entfernen', email, :method => :delete, 
+              :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+            = link_to 'Test', test_email_path(email), :method => :post, 
+              class: 'btn btn-primary'

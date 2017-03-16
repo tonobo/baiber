@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @user_file.user
+%p
+  %b Name:
+  = @user_file.name
+%p
+  %b Content:
+  = @user_file.content
+%p
+  %b Orig:
+  = @user_file.orig
+
+= link_to 'Edit', edit_user_file_path(@user_file)
+\|
+= link_to 'Back', user_files_path

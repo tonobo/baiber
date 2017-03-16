@@ -1,0 +1,5 @@
+- if obj.errors.any?
+  %h2= "#{obj.errors.count} Fehler aufgetreten:"
+  - obj.errors.full_messages.each do |msg|
+    .alert.alert-dismissible.fade.in.alert-danger
+      = msg
