@@ -1,6 +1,6 @@
 .form
   = form_for @user_file do |f|
-    = render partial: 'shared/model_error', locals: { obj: @user_file } 
+    = render partial: 'shared/model_errors', locals: { obj: @user_file } 
     .form-group
       = f.label :name
       = f.text_field :name, class: 'form-control'

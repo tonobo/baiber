@@ -42,6 +42,8 @@ GEM
     autoprefixer-rails (6.7.7)
       execjs
     bcrypt (3.1.11)
+    bootstrap-colorpicker-rails (0.4.0)
+      railties (>= 4.0)
     bootstrap-daterangepicker-rails (0.1.5)
       railties (>= 4.0, < 5.1)
     bootstrap-sass (3.3.7)
@@ -242,6 +244,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-colorpicker-rails
   coffee-rails (~> 4.2)
   devise
   devise-bootstrap-views

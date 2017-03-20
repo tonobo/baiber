@@ -2,21 +2,25 @@
   = render partial: 'shared/model_errors', locals: { obj: @email }
   .form-group
     = f.label :username
-    = f.text_field :username, class: 'form-control', required: true
-  .form-group
-    = f.label :password
-    = f.password_field :password, class: 'form-control', required: true
+    = f.text_field :username, class: 'form-control', required: true, readonly: !!@readonly
+  - unless @readonly
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
   .form-group
     = f.label :server
-    = f.text_field :server, class: 'form-control', required: true
+    = f.text_field :server, class: 'form-control', required: true, readonly: !!@readonly
   .form-group
     = f.label :port
-    = f.text_field :port, class: 'form-control', placeholder: '143'
+    = f.text_field :port, class: 'form-control', placeholder: '143', readonly: !!@readonly
   .form-group
     = f.label :login
-    = f.text_field :login, class: 'form-control', placeholder: 'LOGIN'
+    = f.text_field :login, class: 'form-control', placeholder: 'LOGIN', readonly: !!@readonly
   .form-group
     = f.label :ssl
-    = f.check_box :ssl, class: 'js-switch'
+    = f.check_box :ssl, class: 'js-switch', readonly: !!@readonly
   .actions
-    = f.submit 'Speichern & Testen', class: 'btn btn-primary'
+    - if @readonly
+      = link_to "Bearbeiten", edit_email_path(@email), class: 'btn btn-primary'
+    - else
+      = f.submit 'Speichern & Testen', class: 'btn btn-primary'

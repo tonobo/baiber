@@ -4,19 +4,36 @@
       %th Name
       %th Datei
       %th
+      %th
+      %th
       - unless @unset_controls
         %th
   %tbody
     - @user_files.each do |user_file|
+      - mailentry = user_file.mailentries.first
       %tr
         %td= user_file.name
         %td
           %span.fa{class: icon_for_file(user_file.orig)}
-          %code= user_file.orig.to_s[/[^\/]+$/]
+            - fn = user_file.orig.to_s[/[^\/]+$/].to_s
+            %code{title: fn}
+              = fn.truncate(20)
+        %td= raw file_group_labels(user_file.user_file_groups)
         %td
+          - if mailentry
+            %span.fa.fa-envelope
+            %span.label.label-default= time_ago_in_words mailentry.received_at
+        %td
+          %span.fa.fa-cloud-upload
           %span.label.label-default= time_ago_in_words user_file.created_at
         - unless @unset_controls
           %td
-            = link_to 'Bearbeiten', edit_user_file_path(user_file), class: 'btn btn-default'
-            = link_to 'Entfernen', user_file, :method => :delete, 
-              :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+            = link_to edit_user_file_path(user_file), class: 'btn btn-default' do
+              %span.fa.fa-pencil
+            = link_to user_file.download_url, class: 'btn btn-dark' do
+              %span.fa.fa-cloud-download
+            = link_to user_file, :method => :delete,
+              title: 'Entfernen',
+              :data => { :confirm => 'Are you sure?', toggle: :toolip }, 
+              class: 'btn btn-danger' do
+              %span.fa.fa-trash

@@ -1,0 +1,22 @@
+= form_for @user_file_group do |f|
+  = render partial: 'shared/model_errors', locals: {obj: @user_file_group}
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control', readonly: !!@readonly
+  .form-group
+    = f.label :desc, "Beschreibung"
+    = f.text_field :desc, class: 'form-control', readonly: !!@readonly
+  .form-group
+    = f.label :color
+    #user_file_cp.input-group.colorpicker-component
+      = f.text_field :color, class: 'form-control', readonly: !!@readonly
+      %span.input-group-addon
+        %i
+    - content_for :script do
+      :javascript
+        $('#user_file_cp').colorpicker() 
+  .actions
+    - if @readonly
+      = link_to "Bearbeiten", edit_user_file_group_path(@user_file_group), class: 'btn btn-primary'
+    - else
+      = f.submit 'Speichern'

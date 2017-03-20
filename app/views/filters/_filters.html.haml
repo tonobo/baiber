@@ -1,0 +1,31 @@
+%table.table.table-striped
+  %thead
+    %tr
+      - unless @email
+        %th Email
+      %th Filters
+      %th Mailbox
+      %th Gruppen
+      %th
+
+  %tbody
+    - @filters.each do |filter|
+      %tr
+        - unless @email
+          %td= filter.email.username
+        %td
+          - moo = format_filters(filter.filters).join("\n")
+          - unless moo.to_s.empty?
+            %pre
+              :preserve
+                #{moo}
+        %td= filter.mailbox
+        %td= raw file_group_labels(filter.file_groups)
+        %td
+          = link_to edit_filter_path(filter), class: 'btn btn-default' do
+            %span.fa.fa-pencil
+          = link_to filter, :method => :delete,
+            title: 'Entfernen',
+            :data => { :confirm => 'Are you sure?', toggle: :toolip }, 
+            class: 'btn btn-danger' do
+            %span.fa.fa-trash

@@ -1,0 +1,11 @@
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .dashboard_graph
+      .row.x_title
+        .col-md-6
+          %h3
+            Datei-Gruppe
+      .col-md-12.col-sm-12.col-xs-12
+        - @readonly = true
+        = render 'form'
+      .clearfix

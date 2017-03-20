@@ -1,0 +1,46 @@
+.form.form-horizontal.form-label-left
+  = form_for @filter do |f|
+    = render partial: 'shared/model_errors', locals: { obj: @filter }
+    - mail = @filter.email || params[:email]
+    - if !params[:email] and !@filter.email
+      .form-group
+        = f.label :email
+        = f.select :email, 
+          options_for_select(@current_user.emails.map{|x| ["#{x.server} - #{x.username}", x.id]}, mail),
+          {}, required: true, class: 'form-control'
+      %hr
+    - if params[:email]
+      = hidden_field_tag "filter[email]", params[:email]
+    .form-group
+      = f.label :mailbox
+      - x = params[:mailboxes]
+      - x ||= @filter.email.try(:mailboxes).to_a
+      - x = ["INBOX"] if x.empty? 
+      = f.select :mailbox, options_for_select(x, @filter.mailbox || 'INBOX'), {}, class: 'form-control'
+    - fi = @filter.filters.to_h.symbolize_keys
+    - fi_pre = fi[:pre].to_h.symbolize_keys
+    %hr
+    .form-group
+      %label{for: "filter[filters][groups]"}
+        Gruppen
+      = select_tag "filter[filters][groups]", 
+        options_for_select(UserFileGroup.pluck(:name, :id), @filter.filters[:groups]),
+        class: 'form-control', multiple: true
+    %hr
+    %h3
+      Filters
+    - {subject: 'Betreff', body: 'Inhalt', from: 'Von', to: 'An', cc: 'CC' }.each do |k,v|
+      .form-group
+        %label.control-label.col-md-3.col-sm-3.col-xs-12{for: "filter[filters][pre][#{k}]"}
+          = v
+        .col-md-6.col-sm-6.col-xs-12
+          = text_field_tag "filter[filters][pre][#{k}]", fi_pre[k], class: 'form-control'
+        .clearfix
+    .form-group
+      %label.control-label.col-md-3.col-sm-3.col-xs-12{for: "filter[filters][post]"}
+        Regex
+      .col-md-6.col-sm-6.col-xs-12
+        = text_field_tag "filter[filters][post]", fi[:post], class: 'form-control'
+      .clearfix
+    .actions
+      = f.submit "Speichern", class: 'btn btn-primary'

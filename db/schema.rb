@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315214027) do
+ActiveRecord::Schema.define(version: 20170320092203) do
 
   create_table "emails", force: :cascade do |t|
     t.integer  "user_id"
@@ -25,6 +25,47 @@ ActiveRecord::Schema.define(version: 20170315214027) do
     t.index ["user_id"], name: "index_emails_on_user_id"
   end
 
+  create_table "filters", force: :cascade do |t|
+    t.integer  "email_id"
+    t.text     "filters"
+    t.string   "mailbox"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_id"], name: "index_filters_on_email_id"
+  end
+
+  create_table "mailentries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "filter_id"
+    t.integer  "user_file_id"
+    t.text     "content"
+    t.string   "message_id"
+    t.datetime "received_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["filter_id"], name: "index_mailentries_on_filter_id"
+    t.index ["message_id"], name: "index_mailentries_on_message_id"
+    t.index ["received_at"], name: "index_mailentries_on_received_at"
+    t.index ["user_file_id"], name: "index_mailentries_on_user_file_id"
+    t.index ["user_id"], name: "index_mailentries_on_user_id"
+  end
+
+  create_table "user_file_groups", force: :cascade do |t|
+    t.string   "desc"
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_user_file_groups_on_name"
+  end
+
+  create_table "user_file_groups_files", force: :cascade do |t|
+    t.integer "user_file_id"
+    t.integer "user_file_group_id"
+    t.index ["user_file_group_id"], name: "index_user_file_groups_files_on_user_file_group_id"
+    t.index ["user_file_id"], name: "index_user_file_groups_files_on_user_file_id"
+  end
+
   create_table "user_files", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -33,6 +74,13 @@ ActiveRecord::Schema.define(version: 20170315214027) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_files_on_user_id"
+  end
+
+  create_table "user_files_user_file_groups", force: :cascade do |t|
+    t.integer "user_file_id"
+    t.integer "user_file_group_id"
+    t.index ["user_file_group_id"], name: "index_user_files_user_file_groups_on_user_file_group_id"
+    t.index ["user_file_id"], name: "index_user_files_user_file_groups_on_user_file_id"
   end
 
   create_table "users", force: :cascade do |t|

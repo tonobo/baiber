@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_file_groups
+  resources :filters
   resources :emails
   resources :user_files
   devise_for :users

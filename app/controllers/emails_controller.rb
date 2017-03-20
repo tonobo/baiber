@@ -4,7 +4,7 @@ class EmailsController < ApplicationController
   # GET /emails
   # GET /emails.json
   def index
-    @emails = current_user.emails
+    @emails = current_user.emails.includes(:filters)
   end
 
   # GET /emails/1
@@ -56,6 +56,7 @@ class EmailsController < ApplicationController
   def update
     respond_to do |format|
       if @email.update(email_params)
+        test(redirect: false)
         format.html { redirect_to @email, info: 'Email was successfully updated.' }
         format.json { render :show, status: :ok, location: @email }
       else
@@ -78,11 +79,15 @@ class EmailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_email
-      @email = current_user.emails.find_by(id: params[:id])
+      @email = current_user.emails.find_by!(id: params[:id])
+      @filters = @email.filters
+      @filter = Filter.new(email: @email)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
-      params.require(:email).permit(:username, :password, :server, :port, :login, :ssl)
+      x = params.require(:email).permit(:username, :password, :server, :port, :login, :ssl)
+      x.delete(:password) if x[:password].empty?
+      x
     end
 end

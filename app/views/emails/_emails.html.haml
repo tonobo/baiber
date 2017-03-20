@@ -3,6 +3,7 @@
     %tr
       %th Benutzer
       %th Server
+      %th Filter
       %th 
       - unless @unset_controls
         %th
@@ -12,6 +13,8 @@
       %tr
         %td= email.username
         %td= email.server
+        %td
+          %span.badge= email.filters.to_a.count
         %td
           %span.label.label-default= time_ago_in_words email.created_at
         - unless @unset_controls

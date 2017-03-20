@@ -4,7 +4,9 @@ class UserFilesController < ApplicationController
   # GET /user_files
   # GET /user_files.json
   def index
-    @user_files = current_user.user_files
+    @user_files = current_user.user_files.includes(
+      :user_file_groups, :mailentries
+    )
   end
 
   # GET /user_files/1
