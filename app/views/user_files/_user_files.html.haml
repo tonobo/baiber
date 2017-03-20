@@ -21,11 +21,13 @@
         %td= raw file_group_labels(user_file.user_file_groups)
         %td
           - if mailentry
-            %span.fa.fa-envelope
-            %span.label.label-default= time_ago_in_words mailentry.received_at
+            %span.label.label-default
+              %span.fa.fa-envelope
+              = time_ago_in_words mailentry.received_at
         %td
-          %span.fa.fa-cloud-upload
-          %span.label.label-default= time_ago_in_words user_file.created_at
+          %span.label.label-default
+            %span.fa.fa-cloud-upload
+            = time_ago_in_words user_file.created_at
         - unless @unset_controls
           %td
             = link_to edit_user_file_path(user_file), class: 'btn btn-default' do
