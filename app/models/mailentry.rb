@@ -2,8 +2,12 @@ class Mailentry < ApplicationRecord
   belongs_to :user
   belongs_to :filter
   belongs_to :user_file
-  
+
   validates :message_id, uniqueness: true, presence: true
+
+  default_scope { select(Mailentry.columns_hash.keys - ["content"]) } 
+
+  scope :with_content, ->{ select(Mailentry.columns_hash.keys) }
 
   attr_accessor :raw
 
@@ -13,6 +17,14 @@ class Mailentry < ApplicationRecord
     end
     @raw
   end
+
+  def content
+    unless self.attributes.key?("content")
+      reload
+    end
+    super
+  end
+
 
   delegate :body, :parts, :subject, :attachments, :multipart?, to: :raw
 
