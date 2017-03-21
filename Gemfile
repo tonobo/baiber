@@ -20,6 +20,7 @@ gem 'devise-bootstrap-views'
 gem 'pry-rails'
 gem 'mail'
 gem 'bootstrap-colorpicker-rails'
+gem 'pg'
 gem 'rails-i18n'
 
 group :development do
