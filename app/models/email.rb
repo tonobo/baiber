@@ -19,7 +19,7 @@ class Email < ApplicationRecord
   before_validation do
     self.port ||= 143
     self.ssl = true if self.ssl.nil?
-    self.login ||= 'LOGIN'
+    self.login = 'LOGIN' if self.login.to_s.empty?
   end
 
   def starttls?
@@ -40,6 +40,7 @@ class Email < ApplicationRecord
   end
 
   def mailboxes
+    return [] unless works?
     connection.list("", "*").map(&:name)
   end
 
