@@ -5,8 +5,8 @@ class Filter < ApplicationRecord
 
   serialize :filters
 
-  before_validation do
-    self.filters ||= {pre: {}, post: //}
+  after_initialize do
+    self.filters ||= {pre: {}, post: //, groups: []}
   end
 
   def self.mutex
