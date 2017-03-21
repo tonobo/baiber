@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: postgres:alpine
+    volumes:
+      - /var/lib/baiber/postgres:/var/lib/postgresql/data
+  web:
+    image: dopykuh/baiber
+    environment:
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=supersecurepassword
+      - DEVISE_TOKEN=supersecurepassword
+      - DEVISE_EMAIL=test@example.org
+    volumes:
+      - /var/lib/baiber/app
+    ports:
+      - "127.0.0.1:9292:9292"
+    depends_on:
+      - db
