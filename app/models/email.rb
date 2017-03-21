@@ -33,7 +33,11 @@ class Email < ApplicationRecord
         ssl = false if starttls? 
         s = Net::IMAP.new(self.server, port: self.port, ssl: ssl)
         s.starttls if starttls?
-        s.authenticate(self.login, self.username, self.password)
+        begin
+          s.authenticate(self.login, self.username, self.password)
+        rescue
+          s.login(self.username, self.password)
+        end
         s.examine('INBOX')
         s
       end
